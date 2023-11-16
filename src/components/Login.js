@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
-import './styles/Login.css';
-import { useHistory } from 'react-router-dom';
+import '../styles/Login-styles.css';
+import { useNavigate } from 'react-router-dom';  // Actualización de la importación
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();  // Cambio de useHistory a useNavigate
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('/auth.php', {
+      const response = await fetch('http://localhost/auth.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
+        mode: 'cors',
         body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
       });
 
       if (response.ok) {
         const result = await response.text();
         if (result === 'success') {
-          // Llamada a la función onLogin para actualizar el estado de isLoggedIn en App.js
           onLogin();
-
-          // Redirige al usuario a la página de inicio
-          history.push('/inicio');
+          navigate('/inicio');  // Actualización para usar navigate en lugar de history
         } else {
           setMessage('Credenciales incorrectas');
         }
