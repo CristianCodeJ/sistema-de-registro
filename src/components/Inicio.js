@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './styles/Inicio-styles.css';
+import '../styles/Inicio-styles.css';
 
 const Inicio = () => {
   useEffect(() => {
